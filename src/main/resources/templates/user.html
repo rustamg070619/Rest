@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+            xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>User Manager</title>
+</head>
+<body>
+<div align="center">
+        <h1>This USER PAGE</h1>
+        <br/><br/>
+        <table border="1" cellpadding="10">
+            <thead>
+            <tr>
+                    <th>User ID</th>
+                    <th>Login</th>
+                    <th>Password</th>
+    <th>Roles</th>
+                </tr>
+        </thead>
+            <tbody>
+            <tr th:each="user : ${user}">
+                    <td th:text="${user.id}">User ID</td>
+                    <td th:text="${user.login}">Name</td>
+                    <td th:text="${user.password}">Password</td>
+                    <td th:text="${user.roles}">Roles</td>
+
+                </tr>
+        </tbody>
+        </table>
+</div>   
+</body>
+</html>
