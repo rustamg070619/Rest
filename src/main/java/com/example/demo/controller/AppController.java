@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,29 +22,29 @@ public class AppController {
         return "login";
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/admin")
     public String viewHomePage(Model model) {
         List<User> listUsers = userService.listAll();
         model.addAttribute("listUsers", listUsers);
 
-        return "index";
+        return "admin";
     }
 
-    @RequestMapping("/new")
+    @RequestMapping("/admin/new")
     public String showNewUserPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "new_user";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
         userService.save(user);
 
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
-    @RequestMapping("/edit/{id}")
+    @RequestMapping("/admin/edit/{id}")
     public ModelAndView showEditUserPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("edit_user");
         User user = userService.get(id);
@@ -53,10 +52,10 @@ public class AppController {
         return mav;
     }
 
-    @RequestMapping("/delete/{id}")
+    @RequestMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") int id) {
         userService.delete(id);
-        return "redirect:/";
+        return "redirect:/admin";
     }
 
     @RequestMapping("/user/{id}")
