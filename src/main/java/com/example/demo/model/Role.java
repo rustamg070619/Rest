@@ -10,15 +10,12 @@ import java.util.Set;
 @Table(name = "t_role")
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "role")
     private String role;
-
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    private User user;
-
+    @Transient
+    @ManyToMany(cascade=CascadeType.ALL)
+    private Set<User> users;
     public Role() {
     }
 
@@ -26,9 +23,9 @@ public class Role implements GrantedAuthority {
         this.role = role;
     }
 
-    public Role(String role, User user) {
+    public Role(String role, Set<User> users) {
         this.role = role;
-        this.user = user;
+        this.users = users;
     }
 
     public Long getId() {
@@ -47,21 +44,22 @@ public class Role implements GrantedAuthority {
         this.role = name;
     }
 
-    public User getUser() {
-        return user;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @Override
-    public String toString() {
-        return role;
+    public void setUsers(Set<User> user) {
+        this.users = user;
     }
 
     @Override
     public String getAuthority() {
         return getRole();
+    }
+
+    @Override
+    public String toString() {
+        return role;
+
     }
 }
