@@ -18,6 +18,11 @@ public class AppController {
     @Autowired
     private UserService userService;
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+
     @RequestMapping("/")
     public String viewHomePage(Model model) {
         List<User> listUsers = userService.listAll();

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>login page</title>
+</head>
+<body>
+<div align="center">
+    <h1>Please login in</h1>
+    <br />
+    <form action="#" th:action="@{/fromLogin}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <label>
+                    <input name="j_username" placeholder="input login here"/>
+                </label>
+            </tr>
+            <tr>
+                <label>
+                    <input name="j_password" placeholder="input password here"/>
+                </label>
+            </tr>
+
+            <tr>
+                <td colspan="2"><button type="submit">Login</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

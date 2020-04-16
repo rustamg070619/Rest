@@ -8,12 +8,15 @@ import java.util.Set;
 @Table(name = "t_role")
 public class Role {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "role")
     private String role;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    private Set<User> users;
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    private User user;
+
     public Role() {
     }
 
@@ -21,9 +24,9 @@ public class Role {
         this.role = role;
     }
 
-    public Role(String role, Set<User> users) {
+    public Role(String role, User user) {
         this.role = role;
-        this.users = users;
+        this.user = user;
     }
 
     public Long getId() {
@@ -42,18 +45,16 @@ public class Role {
         this.role = name;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> user) {
-        this.users = user;
+    public void setUser(User user) {
+        this.user = user;
     }
-
 
     @Override
     public String toString() {
         return role;
-
     }
 }
