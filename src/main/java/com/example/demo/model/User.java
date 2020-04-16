@@ -11,14 +11,18 @@ import java.util.Set;
 @Entity
 @Table(name = "t_user")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name = "login")
     private String login;
+
     @Column(name = "password")
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private Set<Role> roles;
 
     public User() {

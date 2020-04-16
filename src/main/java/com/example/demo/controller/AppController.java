@@ -58,10 +58,10 @@ public class AppController {
         return "redirect:/admin";
     }
 
-    @RequestMapping("/user/{id}")
-    public ModelAndView showThisProductPage(@PathVariable(name = "id") int id) {
+    @RequestMapping("/user/{login}")
+    public ModelAndView showThisProductPage(@PathVariable(name = "login") String login) {
         ModelAndView mav = new ModelAndView("user");
-        User user = userService.get(id);
+        User user = (User) userService.loadUserByUsername(login);
         mav.addObject("user", user);
         return mav;
     }
