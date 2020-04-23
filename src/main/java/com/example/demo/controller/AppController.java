@@ -36,13 +36,6 @@ public class AppController {
         return "admin";
     }
 
-    @RequestMapping("/admin/new")
-    public String showNewUserPage(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "new_user";
-    }
-
     @RequestMapping(value = "/admin/save", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user, @ModelAttribute("roles") Role roles) {
         HashSet<Role> roleFromPage = new HashSet<>();

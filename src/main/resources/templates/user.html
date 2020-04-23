@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-            xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -9,48 +9,95 @@
     <title>User Manager</title>
 </head>
 <body>
-<div align="center">
-        <h1>This USER PAGE</h1>
-        <br/><br/>
-        
-    <table border="1" cellpadding="10">
-                
-        <thead>
-                    
-        <tr>
-                            
-            <th>User ID</th>
-                            
-            <th>Login</th>
-                            
-            <th>Password</th>
-            <th>Roles</th>
-                        
-        </tr>
-                
-        </thead>
-                
-        <tbody>
-                    
-        <tr th:each="user : ${user}">
-                            
-            <td th:text="${user.id}">User ID</td>
-                            
-            <td th:text="${user.login}">Name</td>
-                            
-            <td th:text="${user.password}">Password</td>
-                            
-            <td th:text="${user.roles}">Roles</td>
 
-                        
-        </tr>
-                
-        </tbody>
-            
-    </table>
-    <h4><a href="/logout">Exit</a></h4>
+<div class="p-3 mb-2 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                Login is: <b th:text="${#authentication.name}"></b>
+            </div>
+
+            <div class="col">
+                Role is:<b th:text="${#authentication.getAuthorities()}"></b>
+            </div>
+            <div class="col" align="right"><a href="/logout" class="text-secondary">Logout</a></div>
+        </div>
+    </div>
 </div>
- 
+
+<div class="row">
+    <div class="col">
+        <nav class="nav flex-column">
+            <a class="nav-link" th:href="'/user/' + ${#authentication.name}">User</a>
+        </nav>
+    </div>
+    <div class="col-10">
+
+        <h1>User information-page</h1>
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#adminPanel">About user</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="adminPanel">   
+
+                <nav class="navbar navbar-black bg-light">
+                <span class="navbar-text">
+                   All users
+                  </span>
+                </nav>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <table class="table table-striped">
+                                <thead>           
+                                <tr>             
+                                    <th>User ID</th>
+                                                   
+                                    <th>Login</th>
+                                                    
+                                    <th>Password</th>
+
+                                    <th>Roles</th>
+                                                
+                                </tr>
+                                        
+                                </thead>
+                                        
+                                <tbody>            
+                                <tr th:each="user : ${user}">                
+                                    <td th:text="${user.id}">User ID</td>
+                                                    
+                                    <td th:text="${user.login}">Login</td>
+                                                    
+                                    <td th:text="${user.password}">Password</td>
+                                                    
+                                    <td th:text="${user.roles}">Roles</td>
+                                            
+                                </tr>
+                                      
+                                </tbody>
+                                    
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--модальное окно-->
+
+
+   
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -60,6 +107,5 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-  
 </body>
 </html>
