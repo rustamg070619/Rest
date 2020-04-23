@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import com.example.demo.model.Role;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository repo;
+
+    @Autowired
+    private RoleRepository repoRole;
 
     public List<User> listAll() {
         return repo.findAll();
@@ -38,6 +43,11 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return repo.findByLogin(s);
     }
+
+    public List<Role> listAllRoles() {
+        return repoRole.findAll();
+    }
+
 }
 
 

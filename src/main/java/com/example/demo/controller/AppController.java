@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Controller
@@ -25,7 +29,9 @@ public class AppController {
     @RequestMapping("/admin")
     public String viewHomePage(Model model) {
         List<User> listUsers = userService.listAll();
+        List<Role> listRoles = userService.listAllRoles();
         model.addAttribute("listUsers", listUsers);
+        model.addAttribute("rolesFromBase", listRoles);
 
         return "admin";
     }
@@ -38,18 +44,22 @@ public class AppController {
     }
 
     @RequestMapping(value = "/admin/save", method = RequestMethod.POST)
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String saveUser(@ModelAttribute("user") User user, @ModelAttribute("roles") Role roles) {
+        HashSet<Role> roleFromPage = new HashSet<>();
+        roleFromPage.add(roles);
+        user.setRoles(roleFromPage);
         userService.save(user);
 
         return "redirect:/admin";
     }
 
-    @RequestMapping("/admin/edit/{id}")
-    public ModelAndView showEditUserPage(@PathVariable(name = "id") int id) {
-        ModelAndView mav = new ModelAndView("edit_user");
-        User user = userService.get(id);
-        mav.addObject("user", user);
-        return mav;
+    @RequestMapping("/admin/edit")
+    public String showEditUserPage(@ModelAttribute User user, @ModelAttribute("roles") Role roles) {
+        HashSet<Role> roleFromPageEdit = new HashSet<>();
+        roleFromPageEdit.add(roles);
+        user.setRoles(roleFromPageEdit);
+       userService.save(user);
+        return "redirect:/admin";
     }
 
     @RequestMapping("/admin/delete/{id}")
