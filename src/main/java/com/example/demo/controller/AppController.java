@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +21,21 @@ public class AppController {
         return listUsers;
     }
 
+    @GetMapping("/admin/get/{id}")
+    public User getUser(@PathVariable(name = "id") Long id) {
+        return userService.get(id);
+    }
+
+
     @PostMapping(value = "/admin/save")
-    public void saveUser(@RequestBody User user) {
+    public void saveUser(@RequestBody User user, String role) {
+        String r = role;
         userService.save(user);
     }
 
     @DeleteMapping("/admin/delete/{id}")
     public void deleteUser(@PathVariable(name = "id") Long id) {
         userService.delete(id);
-
     }
 
     @GetMapping("/user/{login}")

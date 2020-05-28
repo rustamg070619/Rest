@@ -7,7 +7,7 @@ $(document).ready(function() {
             tr.push('<td>' + json[i].login + '</td>');
             tr.push('<td>' + json[i].password + '</td>');
             tr.push('<td>' + (json[i].roles[0]).role + '</td>');
-            tr.push('<td><button class=\'edit\'>Edit</button>&nbsp;&nbsp;<button class=\'delete\' id=' + json[i].id + '>Delete</button></td>');
+            tr.push('<td><button class=btn btn-primary>Edit</button>&nbsp;&nbsp;<button class=\'delete\' id=' + json[i].id + '>Delete</button></td>');
             tr.push('</tr>');
         }
         $('table').append($(tr.join('')));
@@ -81,19 +81,18 @@ $(document).ready(function() {
         var id = parent.children("td:nth-child(1)");
         var login = parent.children("td:nth-child(2)");
         var password = parent.children("td:nth-child(3)");
-        var roles = parent.children("td:nth-child(4)");
+        var role = parent.children("td:nth-child(4)");
         var buttons = parent.children("td:nth-child(5)");
 
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
             url: "http://localhost:8080/admin/save",
-            data: JSON.stringify({'id' : id.html(), 'login' : login.children("input[type=text]").val(), 'password' : password.children("input[type=text]").val(), 'roles' : roles.children("input[type=text]").val()}),
+            data: JSON.stringify({'id' : id.html(), 'login' : login.children("input[type=text]").val(), 'password' : password.children("input[type=text]").val()}),
             cache: false,
             success: function() {
                 login.html(login.children("input[type=text]").val());
                 password.html(password.children("input[type=text]").val());
-                roles.html(roles.children("input[type=text]").val());
                 buttons.html("<button class='edit' id='" + id.html() + "'>Edit</button>&nbsp;&nbsp;<button class='delete' id='" + id.html() + "'>Delete</button>");
             },
             error: function() {
