@@ -7,20 +7,17 @@
     <meta charset="utf-8"/>
     <title>User Manager</title>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="/js/admin.js"></script>
 
 </head>
 <body>
 <div class="p-3 mb-2 bg-dark text-white">
     <div class="container">
         <div class="row">
-            <div class="col">
-                Login is: HERE INPUT LOGIN
-            </div>
+            <div class="col" id="LoginAuth"></div>
 
-            <div class="col">
-                Role is: HERE INPUT ROLE
-            </div>
+            <div class="col" id="RoleAuth"></div>
+
             <div class="col" align="right"><a href="/logout" class="text-secondary">Logout</a></div>
         </div>
     </div>
@@ -30,7 +27,7 @@
     <div class="col">
         <nav class="nav flex-column">
             <a class="nav-link active" href="/admin">Admin</a>
-            <a class="nav-link" href="'/user/' + ${#authentication.name}">User</a>
+            <a class="nav-link" href="">User</a>
         </nav>
     </div>
     <div class="col-10">
@@ -63,7 +60,6 @@
                                     <th>User ID</th>
                                                    
                                     <th>Login</th>
-                                                   
                                     <th>Password</th>
                                     <th>Roles</th>
                                     <th>Edit</th>
@@ -72,52 +68,97 @@
                                 </tr>
                                         
                                 </thead>
-                                <!--               модалка ЭДИТ                 -->
-                                <div class="modal fade" id="editModal" tabindex="-1"
-                                     role="dialog" aria-labelledby="exampleModalLabel"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabelEdit">Modal
-                                                    title</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
+                            </table>
+                            <!--               модалка ЭДИТ                 -->
+                            <div class="modal fade" id="editModal" tabindex="-1"
+                                 role="dialog" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalLabelEdit">Edit User</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                <form action="#" method="post">
-                                                    <div class="form-group">
-                                                        <label for="IdEditModal">id</label>
-                                                        <input type="text" class="form-control" id="IdEditModal">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="LoginEditModal">Login</label>
-                                                        <input type="text" class="form-control" id="LoginEditModal">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="PasswordEditModal">Password</label>
-                                                        <input type="password" class="form-control"
-                                                               id="PasswordEditModal">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="RoleEditModal">Role</label>
-                                                        <select class="custom-select" id="RoleEditModal"
-                                                                name="role">
-                                                            <option>ADMIN</option>
-                                                            <option>USER</option>
-                                                        </select>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                </form>
-                                            </div>
+                                            <form action="#" method="post">
+                                                <div class="form-group">
+                                                    <label for="IdEditModal">id</label>
+                                                    <input type="text" class="form-control" id="IdEditModal">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="LoginEditModal">Login</label>
+                                                    <input type="text" class="form-control" id="LoginEditModal">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="PasswordEditModal">Password</label>
+                                                    <input type="password" class="form-control"
+                                                           id="PasswordEditModal">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="RoleEditModal">Role</label>
+                                                    <select class="custom-select" id="RoleEditModal"
+                                                            name="role">
+                                                        <option>ADMIN</option>
+                                                        <option>USER</option>
+                                                    </select>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" id="editSaveButton">Save
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-                                <!--               модалка ЭДИТ                 -->
-                            </table>
+                            </div>
+                            <!--               модалка EDIT                 -->
+
+                            <!--               модалка DELETE                 -->
+                            <div class="modal fade" id="deleteModal" tabindex="-1"
+                                 role="dialog" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalLabelDelete">Delete User</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <form action="#" method="post">
+                                                <div class="form-group">
+                                                    <label for="IdDeleteModal">id</label>
+                                                    <input type="text" class="form-control" id="IdDeleteModal"
+                                                           readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="LoginDeleteModal">Login</label>
+                                                    <input type="text" class="form-control" id="LoginDeleteModal"
+                                                           readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="PasswordDeleteModal">Password</label>
+                                                    <input type="password" class="form-control"
+                                                           id="PasswordDeleteModal" readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="RoleDeleteModal">Role</label>
+                                                    <input type="text" class="form-control"
+                                                           id="RoleDeleteModal"  readonly="readonly">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary" id="deleteModalButton">Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--               модалка DELETE                 -->
                         </div>
                     </div>
                 </div>

@@ -4,9 +4,12 @@ import com.example.demo.model.Role;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 
 @RestController
@@ -44,6 +47,12 @@ public class AppController {
         User user = (User) userService.loadUserByUsername(login);
         mav.addObject("user", user);
         return mav;
+    }
+
+    @GetMapping("/admin/getAuth")
+    public User getAuth() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return (User) auth.getPrincipal();
     }
 
 }

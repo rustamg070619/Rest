@@ -22,6 +22,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         List<Role> list = (List) authentication.getAuthorities();
         String role = list.get(0).getRole();
         if (role.equals("ADMIN")) {
+
             httpServletResponse.sendRedirect("/admin");
         } else if (role.equals("USER")) {
             String name = httpServletRequest.getParameter("j_username");
